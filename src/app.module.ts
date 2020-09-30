@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { StatsController } from './stats/stats.controller';
 import { StatsModule } from './stats/stats.module';
-import { StatsService } from './stats/stats.service';
+import { MongooseModule } from '@nestjs/mongoose'
 
 @Module({
-  imports: [StatsModule],
+  imports: [
+    StatsModule, 
+    MongooseModule.forRoot('mongodb://localhost/dota-stats', { useNewUrlParser: true})],
 })
 export class AppModule {}
