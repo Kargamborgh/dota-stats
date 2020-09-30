@@ -26,6 +26,17 @@ export class StatsService {
       const players = await this.playerModel.find().exec()
       return players
     }
+
+    async editPlayer(playerID, createPlayerDTO: CreatePlayerDTO): Promise<Player> {
+      const editedPlayer = await this.playerModel
+        .findByIdAndUpdate(playerID, createPlayerDTO, { new: true})
+      return editedPlayer
+    }
+
+    async deletePlayer(playerID): Promise<any> {
+      const deletedPlayer = await this.playerModel.findByIdAndRemove(playerID)
+      return deletedPlayer
+    }
   }
 
 
