@@ -1,4 +1,4 @@
 export interface Stat {
-    id: number;
-    text: string;
+    readonly id: number;
+    readonly text: string;
 }

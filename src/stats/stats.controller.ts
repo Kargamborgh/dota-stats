@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Res, HttpStatus, Param, NotFoundException } from '@nestjs/common';
-import { CreateStatDto } from './dto/create-stat.dto'
+import { CreateStatDTO } from './dto/create-stat.dto'
 import { StatsService } from './stats.service';
 import { Stat } from './interfaces/stat.interface'
 import { CreatePlayerDTO } from './dto/create-player.dto';
@@ -11,30 +11,29 @@ let statNumber: number = 0
 export class StatsController {
   constructor(private statsService: StatsService) {}
 
-  //add new player
-
-  @Post('/player')
-  async addPlayer(@Res() res, @Body() createPlayerDTO: CreatePlayerDTO) {
-    const newPlayer = await this.statsService.addPlayer(createPlayerDTO)
+  @Post('/stat')
+  async addStat(@Res() res, @Body() createStatDTO: CreateStatDTO) {
+    const newStat = await this.statsService.addStat(createStatDTO);
     return res.status(HttpStatus.OK).json({
-      message: 'Player added successfully',
-      player: newPlayer
-    })
+      message: 'Stat has been submitted successfully!',
+      stat: newStat,
+    });
   }
 
-  @Get('/player/:playerID')
-  async getPlayer(@Res() res, @Param('playerID', new ValidateObjectId()) playerID) {
-    const player = await this.statsService.getPlayer(playerID)
-    if (!player) {
-      throw new NotFoundException('Player does not exist fool')
+  @Get('stat/:statID')
+  async getStat(@Res() res, @Param('statID', new ValidateObjectId()) statID) {
+    const stat = await this.statsService.getStat(statID);
+    if (!stat) {
+        throw new NotFoundException('Stat does not exist!');
     }
-    return res.status(HttpStatus.OK).json(player)
+    return res.status(HttpStatus.OK).json(stat);
   }
 
-  @Get('/players')
-  async getPlayers(@Res() res)  {
-    const players = await this.statsService.getPlayers()
-    return res.status(HttpStatus.OK).json(players)
+  // Fetch all posts
+  @Get('stats')
+  async getStats(@Res() res) {
+    const stats = await this.statsService.getStats();
+    return res.status(HttpStatus.OK).json(stats);
   }
 
   }

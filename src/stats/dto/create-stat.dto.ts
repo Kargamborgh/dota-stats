@@ -1,4 +1,4 @@
-export class CreateStatDto {
+export class CreateStatDTO {
     id: number;
     text: string;
 }
